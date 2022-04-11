@@ -1,0 +1,33 @@
+name: Download and publish DEB 7.x/8.x
+on:
+  push:
+    branches: [ main ]
+env:
+  VERSION_7x: "7.17.2"
+  VERSION_8x: "8.1.2"
+  # https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.1.2-amd64.deb
+  BASE_URL: https://artifacts.elastic.co/downloads
+
+jobs:
+  dl-and-pub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Elastic 7.x
+        run: wget ${{ env.BASE_URL }}/elasticsearch/elasticsearch-${{ env.VERSION_7x }}-amd64.deb
+      - name: Download Elastic 8.x
+        run: wget ${{ env.BASE_URL }}/elasticsearch/elasticsearch-${{ env.VERSION_8x }}-amd64.deb
+      - name: Download Logstash 7.x
+        run: wget ${{ env.BASE_URL }}/logstash/logstash-${{ env.VERSION_7x }}-amd64.deb
+      - name: Download Logstash 8.x
+        run: wget ${{ env.BASE_URL }}/logstash/logstash-${{ env.VERSION_8x }}-amd64.deb
+      - name: Download Kibana 7.x
+        run: wget ${{ env.BASE_URL }}/kibana/kibana-${{ env.VERSION_7x }}-amd64.deb
+      - name: Download Kibana 8.x
+        run: wget ${{ env.BASE_URL }}/kibana/kibana-${{ env.VERSION_8x }}-amd64.deb
+      - name: List files
+        run: ls -lh *.deb
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: *.deb
