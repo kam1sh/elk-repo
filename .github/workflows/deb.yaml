@@ -1,8 +1,10 @@
 name: Download and publish DEB 7.x/8.x
 on:
+  release:
+    types: [published]
   push:
     branches: [ main ]
-    tags: [ "v*.*.*" ]
+
 env:
   VERSION_7x: "7.17.2"
   VERSION_8x: "8.1.2"
