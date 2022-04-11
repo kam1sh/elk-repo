@@ -5,7 +5,6 @@ on:
 env:
   VERSION_7x: "7.17.2"
   VERSION_8x: "8.1.2"
-  # https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.1.2-amd64.deb
   BASE_URL: https://artifacts.elastic.co/downloads
 
 jobs:
@@ -30,4 +29,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: *.deb
+          files: "*.deb"
